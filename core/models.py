@@ -34,6 +34,13 @@ class Person(models.Model):
             self.born
         )
 
+class MovieManager(models.Manager):
+    def all_with_related_persons(self):
+        qs = self.get_queryset()
+        qs = qs.selected_related('director')
+        qs - qs.prefetch_related('writers', 'actors')
+        return qs
+
 class Movie(models.Model):
     NOT_RATED = 0
     RATED_G = 1
@@ -58,6 +65,8 @@ class Movie(models.Model):
     website = models.URLField(
         blank = True
     )
+    
+    objects = MovieManager()
     
     class Meta:
         ordering = ('-year', 'title')

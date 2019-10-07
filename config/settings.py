@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'user', #new
     'core',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -89,6 +90,7 @@ DATABASES = {
     }
 }
 
+LOGIN_REDIRECT_URL = 'core:MovieList'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators

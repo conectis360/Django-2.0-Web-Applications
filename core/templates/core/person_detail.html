@@ -10,24 +10,33 @@
     <h2>actor</h2>
 
     <ul >
-    {% for role in object.role_set.all %}
-        <li>
-            <a href="{% url 'core:MovieDetail' role.movie.id %}">
-                {{role.movie}}
-            </a>:
-            {{role.name}}
-        </li>
-
-
-
-
-
-
-
-
-
-
-
-        
-    {% endfor %}
+        {% for role in object.role_set.all %}
+            <li>
+                <a href="{% url 'core:MovieDetail' role.movie.id %}">
+                    {{role.movie}}
+                </a>:
+                {{role.name}}
+            </li>
+        {% endfor %}
+    </ul>
+    <h2>Writer</h2>
+    <ul>
+        {% for movie in object.directed.all %}
+            <li >
+                <a href="{% url 'core:MovieDetail' movie.id %}">
+                    {{ movie }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <h2>Director</h2>
+    <ul>
+        {% for movie in object.directed.all %}
+            <li >
+                <a href="{% url 'core:MovieDetail' movie.id %}">
+                    {{ movie }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock main %}
