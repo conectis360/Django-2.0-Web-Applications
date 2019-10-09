@@ -1,9 +1,11 @@
 from django.db import models
+from django.conf import settings
+
 
 class PersonManager(models.Manager):
     def all_with_prefetch_movies(self):
         qs = self.get_queryset()
-        return qs.prefech_related(
+        return qs.prefetch_related(
             'directed',
             'writing_credits',
             'role_set_movie'
@@ -37,8 +39,8 @@ class Person(models.Model):
 class MovieManager(models.Manager):
     def all_with_related_persons(self):
         qs = self.get_queryset()
-        qs = qs.selected_related('director')
-        qs - qs.prefetch_related('writers', 'actors')
+        qs = qs.select_related('director')
+        qs = qs.prefetch_related('writers', 'actors')
         return qs
 
 class Movie(models.Model):
@@ -112,3 +114,30 @@ class Role(models.Model):
         )
         
         
+class Vote(models.Model):
+    UP = 1
+    DOWN = -1
+    VALUE_CHOICES = (
+        (UP, "",),
+        (DOWN, "",),
+    )
+    
+    value = models.SmallIntegerField(
+        choices=VALUE_CHOICES,
+    )
+    
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    
+    movie = models.ForeignKey (
+        Movie,
+        on_delete=models.CASCADE
+    )
+    
+    voted_on = models.DateTimeField(
+        auto_now=True
+    )
+    class Meta:
+        unique_together = ('user', 'movie')
