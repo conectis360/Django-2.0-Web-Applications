@@ -90,7 +90,7 @@ DATABASES = {
     }
 }
 
-LOGIN_REDIRECT_URL = 'core:MovieList'
+LOGIN_REDIRECT_URL = 'user:login'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -129,3 +129,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/uploaded/'
+MEDIA_ROOT = os.path.join(BASE_DIR, '../media_root/')
